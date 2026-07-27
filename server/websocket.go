@@ -362,7 +362,7 @@ func connectWebSocket(websocketEndpoint string) (*ws.SafeConn, error) {
 
 	headers := newWSHeaders()
 
-	conn, resp, err := dialer.Dial(websocketEndpoint, nil)
+	conn, resp, err := dialer.Dial(websocketEndpoint, headers)
 	if err != nil {
 		if resp != nil && resp.StatusCode != 101 {
 			return nil, &httpStatusError{StatusCode: resp.StatusCode, Status: resp.Status}
@@ -487,7 +487,7 @@ func establishTerminalConnection(token, id, endpoint string) {
 
 	headers := newWSHeaders()
 
-	conn, _, err := dialer.Dial(endpoint, nil)
+	conn, _, err := dialer.Dial(endpoint, headers)
 	if err != nil {
 		log.Println("Failed to establish terminal connection:", err)
 		return
