@@ -57,9 +57,9 @@ var RootCmd = &cobra.Command{
 		defer stop()
 
 		stopWarning := func() {}
-		if !flags.DisableWebSsh {
-			stopWarning = startSecurityWarning(stopCtx)
-		}
+		//if !flags.DisableWebSsh {
+		//	stopWarning = startSecurityWarning(stopCtx)
+		//}
 		defer stopWarning()
 		go func() {
 			<-stopCtx.Done()
