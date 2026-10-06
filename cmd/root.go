@@ -56,7 +56,10 @@ var RootCmd = &cobra.Command{
 		stopCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 		defer stop()
 
-		stopWarning := startSecurityWarning(stopCtx)
+		stopWarning := func() {}
+		//if !flags.DisableWebSsh {
+		//	stopWarning = startSecurityWarning(stopCtx)
+		//}
 		defer stopWarning()
 		go func() {
 			<-stopCtx.Done()
