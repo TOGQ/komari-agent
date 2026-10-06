@@ -130,6 +130,7 @@ func sendDownloadStream(args map[string]interface{}) (json.RawMessage, error) {
 	request.Header.Set("X-Komari-Transfer-Token", strings.TrimSpace(argString(args, "transfer_token")))
 	request.Header.Set("X-Komari-Transfer-Offset", fmt.Sprintf("%d", offset))
 	request.Header.Set("X-Komari-Transfer-Length", fmt.Sprintf("%d", length))
+	setCFHeaders(request.Header)
 	if fileSize := argInt64(args, "file_size"); fileSize > 0 {
 		request.Header.Set("Content-Range", fmt.Sprintf("bytes %d-%d/%d", offset, offset+length-1, fileSize))
 	}
@@ -183,6 +184,7 @@ func receiveUploadStream(args map[string]interface{}) (json.RawMessage, error) {
 	request.Header.Set("X-Komari-Transfer-Token", strings.TrimSpace(argString(args, "transfer_token")))
 	request.Header.Set("X-Komari-Transfer-Offset", fmt.Sprintf("%d", spec.Offset))
 	request.Header.Set("X-Komari-Transfer-Length", fmt.Sprintf("%d", spec.Expected))
+	setCFHeaders(request.Header)
 	response, err := fileStreamHTTPClient().Do(request)
 	if err != nil {
 		return nil, fmt.Errorf("upload_stream: HTTP request: %w", err)

@@ -818,6 +818,7 @@ func postFileResult(result v2.FileResult) {
 			return
 		}
 		req.Header.Set("Content-Type", "application/json")
+		setCFHeaders(req.Header)
 		response, err := client.Do(req)
 		if response != nil {
 			_, _ = io.Copy(io.Discard, response.Body)

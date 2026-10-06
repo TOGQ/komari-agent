@@ -345,6 +345,10 @@ func postV2RPC(payload interface{}) error {
 	if compressed {
 		req.Header.Set("Content-Encoding", "gzip")
 	}
+	if flags.CFAccessClientID != "" && flags.CFAccessClientSecret != "" {
+		req.Header.Set("CF-Access-Client-Id", flags.CFAccessClientID)
+		req.Header.Set("CF-Access-Client-Secret", flags.CFAccessClientSecret)
+	}
 	client := dnsresolver.GetHTTPClientWithPreference(30*time.Second, flags.PreferIPVersion)
 	resp, err := client.Do(req)
 	if err != nil {
